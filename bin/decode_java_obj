@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+#
+# http://java.sun.com/j2se/1.5.0/docs/guide/serialization/spec/protocol.html
+# http://java.sun.com/j2se/1.5.0/docs/api/java/io/ObjectInputStream.html
+
+use warnings;
+use strict;
+use lib 'lib';
+
+use Data::Dumper;
+use java::io::ObjectInputStream;
+
+open(my $fh, '<', $ARGV[0]) or die ("couldn't open file: $!");
+binmode($fh);
+
+my $java_ois = new java::io::ObjectInputStream($fh);
+my $weirdobj = $java_ois->readObject();
+
+print Dumper($weirdobj);
+
+close($fh);
+
+1;
+
